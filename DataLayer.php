@@ -40,12 +40,12 @@ class DataLayer
         return class_exists('WooCommerce') && abs(WC()->version) >= 3;
     }
 
-    private function showAdminNotice()
+    public function showAdminNotice()
     {
         echo "<p>Woocommerce Order Datalayer requires at least Woocommerce 3.0</p>";
     }
 
-    public function addToWPHead()
+    private function addToWPHead()
     {
         add_action('wp_head', [ $this, 'output' ]);
     }
