@@ -1,0 +1,15 @@
+{
+    "name": "framecreative/woocommerce-order-datalayer",
+    "description": "Pushes completed orders into a javascript object named datalayer into the wp_head() for Google Tag Manager to use.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Frame Creative",
+            "email": "digital@framecreative.com.au"
+        }
+    ],
+    "type": "wordpress-plugin",
+    "require": {
+        "composer/installers": "~1.0"
+    }
+}
