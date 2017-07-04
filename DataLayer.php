@@ -1,13 +1,19 @@
 <?php
-/*
-
-Plugin Name: Woocommerce Transaction Tracking
-Plugin URI: https://github.com/framedigital/woocommerce-transaction-tracking
-Version: 1.0.0
-Author: Frame Creative
-Author URI: https://framecreative.com.au
-Description: Pushes completed orders into a javascript object named datalayer for Google Tag Manager to use.
-
+/**
+ *
+ * Plugin Name: Woocommerce Order Datalayer
+ * Plugin URI: https://github.com/framedigital/woocommerce-order-datalayer
+ * Version: 1.0.0
+ * Author: Frame Creative
+ * Author URI: https://framecreative.com.au
+ * Description: Pushes completed orders into a javascript object named datalayer for Google Tag Manager to use.
+ * Requires at least: 4.0
+ * Tested up to: 4.8
+ *
+ *
+ * @package Woocommerce Order Datalayer
+ * @category Woocommerce
+ * @author Frame Creative
 */
 
 class DataLayer
@@ -18,11 +24,25 @@ class DataLayer
 
     public function __construct()
     {
+        if (!$this->hasValidRequirements()) {
+            add_action('admin_notices', [ $this, 'showAdminNotice' ]);
+            return;
+        }
         if (!is_order_received_page()) {
             return;
         }
         $this->setupDataLayer();
         $this->addToWPHead();
+    }
+
+    private function hasValidRequirements()
+    {
+        return class_exists('WooCommerce') && abs(WC()->version) >= 3;
+    }
+
+    private function showAdminNotice()
+    {
+        echo "<p>Woocommerce Order Datalayer requires at least Woocommerce 3.0</p>";
     }
 
     public function addToWPHead()
