@@ -3,7 +3,7 @@
  *
  * Plugin Name: Woocommerce Order Datalayer
  * Plugin URI: https://github.com/framedigital/woocommerce-order-datalayer
- * Version: 1.0.0
+ * Version: 1.2.0
  * Author: Frame Creative
  * Author URI: https://framecreative.com.au
  * Description: Pushes completed orders into a javascript object named datalayer for Google Tag Manager to use.
@@ -31,6 +31,7 @@ class DataLayer
         if (!is_order_received_page()) {
             return;
         }
+
         $this->setupDataLayer();
         $this->addToWPHead();
     }
@@ -42,12 +43,14 @@ class DataLayer
 
     public function showAdminNotice()
     {
-        echo "<p>Woocommerce Order Datalayer requires at least Woocommerce 3.0</p>";
+        echo "<div class='notice notice-warning'>
+                <p>Woocommerce Order Datalayer requires at least Woocommerce 3.0</p>
+            </div>";
     }
 
     private function addToWPHead()
     {
-        add_action('wp_head', [ $this, 'output' ]);
+        add_action('wp_head', [ $this, 'output' ], 30);
     }
 
     public function output()
@@ -72,7 +75,7 @@ class DataLayer
             }
         }
 
-
+        // Make sure the order is only tracked once
         if (1 == get_post_meta($orderId, '_ga_tracked', true)) {
             unset($this->order);
         }
@@ -174,4 +177,4 @@ function dataLayer()
     return DataLayer::instance();
 }
 
-dataLayer();
+add_action('wp_head', 'dataLayer', 5);
