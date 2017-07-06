@@ -55,10 +55,12 @@ class DataLayer
 
     public function output()
     {
-        if (!empty($this->dataLayer)) {
-            $dataLayer = json_encode($this->dataLayer);
-            $script = '<script data-cfasync="false" type="text/javascript">dataLayer.push( %s );</script>';
-            echo sprintf($script, $dataLayer);
+        $dataLayer = apply_filters('woocommerce_order_datalayer', $this->dataLayer);
+
+        if (!empty($dataLayer)) {
+            $encodedDataLayer = json_encode($dataLayer);
+            $scriptTag = '<script data-cfasync="false" type="text/javascript">dataLayer.push( %s );</script>';
+            echo sprintf($scriptTag, $encodedDataLayer);
         }
     }
 
