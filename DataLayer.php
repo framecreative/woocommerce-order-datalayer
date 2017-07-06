@@ -3,7 +3,7 @@
  *
  * Plugin Name: Woocommerce Order Datalayer
  * Plugin URI: https://github.com/framedigital/woocommerce-order-datalayer
- * Version: 1.3.0
+ * Version: 1.3.1
  * Author: Frame Creative
  * Author URI: https://framecreative.com.au
  * Description: Pushes completed orders into a javascript object named datalayer for Google Tag Manager to use.

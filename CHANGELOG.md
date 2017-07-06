@@ -1,3 +1,7 @@
+# Woocommerce Transaction Tracking 1.3.1
+
+- Better use of actions to correctly show admin notice
+
 # Woocommerce Transaction Tracking 1.3.0
 
 - Added filter woocommerce_order_datalayer
