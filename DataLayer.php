@@ -28,10 +28,14 @@ class DataLayer
             add_action('admin_notices', [ $this, 'showAdminNotice' ]);
             return;
         }
+        add_action('wp_head', [ $this, 'init' ], 5);
+    }
+
+    public function init()
+    {
         if (!is_order_received_page()) {
             return;
         }
-
         $this->setupDataLayer();
         $this->addToWPHead();
     }
@@ -45,6 +49,9 @@ class DataLayer
     {
         echo "<div class='notice notice-warning'>
                 <p>Woocommerce Order Datalayer requires at least Woocommerce 3.0</p>
+                <button type='button' class='notice-dismiss'>
+                    <span class='screen-reader-text'>Dismiss this notice.</span>
+                </button>
             </div>";
     }
 
@@ -179,4 +186,4 @@ function dataLayer()
     return DataLayer::instance();
 }
 
-add_action('wp_head', 'dataLayer', 5);
+add_action('init', 'dataLayer');
