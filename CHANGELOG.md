@@ -1,3 +1,7 @@
+# Woocommerce Transaction Tracking 1.3.2
+
+- Fix dismiss button
+
 # Woocommerce Transaction Tracking 1.3.1
 
 - Better use of actions to correctly show admin notice

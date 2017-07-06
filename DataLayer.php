@@ -3,7 +3,7 @@
  *
  * Plugin Name: Woocommerce Order Datalayer
  * Plugin URI: https://github.com/framedigital/woocommerce-order-datalayer
- * Version: 1.3.1
+ * Version: 1.3.2
  * Author: Frame Creative
  * Author URI: https://framecreative.com.au
  * Description: Pushes completed orders into a javascript object named datalayer for Google Tag Manager to use.
@@ -47,7 +47,7 @@ class DataLayer
 
     public function showAdminNotice()
     {
-        echo "<div class='notice notice-warning'>
+        echo "<div class='notice notice-warning is-dismissible'>
                 <p>Woocommerce Order Datalayer requires at least Woocommerce 3.0</p>
                 <button type='button' class='notice-dismiss'>
                     <span class='screen-reader-text'>Dismiss this notice.</span>
