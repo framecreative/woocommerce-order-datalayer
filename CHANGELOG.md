@@ -1,3 +1,7 @@
+# Woocommerce Transaction Tracking 1.3.0
+
+- Added filter woocommerce_order_datalayer
+
 # Woocommerce Transaction Tracking 1.2.0
 
 - Fix issue with not waiting for WP head
