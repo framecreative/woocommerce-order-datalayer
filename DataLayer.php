@@ -42,13 +42,13 @@ class DataLayer
 
     private function hasValidRequirements()
     {
-        return class_exists('WooCommerce') && abs(WC()->version) >= 3;
+        return class_exists('WooCommerce') && floatval(WC()->version) >= 2.6;
     }
 
     public function showAdminNotice()
     {
         echo "<div class='notice notice-warning is-dismissible'>
-                <p>Woocommerce Order Datalayer requires at least Woocommerce 3.0</p>
+                <p>Woocommerce Order Datalayer requires at least Woocommerce 2.6</p>
                 <button type='button' class='notice-dismiss'>
                     <span class='screen-reader-text'>Dismiss this notice.</span>
                 </button>
@@ -79,7 +79,7 @@ class DataLayer
         if ($orderId > 0) {
             $this->order = new WC_Order($orderId);
 
-            if ($this->order->get_order_key() != $order_key) {
+            if ($this->getOrderKey() != $order_key) {
                 unset($this->order);
             }
         }
@@ -116,14 +116,14 @@ class DataLayer
             $_product_ids = [];
 
             foreach ($this->order->get_items() as $item) {
-                $product     = $item->get_product();
+                $product     = $this->get_product($item);
                 $product_id  = $product->get_id();
                 $product_sku = $product->get_sku();
 
                 $product_categories = get_the_terms($product_id, 'product_cat');
 
                 if ((is_array($product_categories)) && (count($product_categories) > 0)) {
-                    $product_cat = array_pop($_product_cats);
+                    $product_cat = array_pop($product_categories);
                     $product_cat = $product_cat->name;
                 } else {
                     $product_cat = '';
@@ -163,9 +163,9 @@ class DataLayer
         $this->dataLayer['transactionType']           = 'sale';
         $this->dataLayer['transactionAffiliation']    = html_entity_decode(get_bloginfo('name'), ENT_QUOTES, 'utf-8');
         $this->dataLayer['transactionTotal']          = $this->order->get_total();
-        $this->dataLayer['transactionShipping']       = $this->order->get_shipping_total();
+        $this->dataLayer['transactionShipping']       = $this->get_shipping_total();
         $this->dataLayer['transactionTax']            = $this->order->get_total_tax();
-        $this->dataLayer['transactionPaymentType']    = $this->order->get_payment_method_title();
+        $this->dataLayer['transactionPaymentType']    = $this->get_payment_method_title();
         $this->dataLayer['transactionCurrency']       = get_woocommerce_currency();
         $this->dataLayer['transactionShippingMethod'] = $this->order->get_shipping_method();
         $this->dataLayer['transactionPromoCode']      = implode(', ', $this->order->get_used_coupons());
@@ -177,6 +177,33 @@ class DataLayer
             self::$_instance = new self();
         }
         return self::$_instance;
+    }
+
+    // WooCommerce 2/3 compatibility methods
+
+    private function isWoo3()
+    {
+        return abs(WC()->version) >= 3;
+    }
+
+    private function getOrderKey()
+    {
+        return $this->isWoo3() ? $this->order->get_order_key() : $this->order->order_key;
+    }
+
+    private function get_product($item)
+    {
+        return $this->isWoo3() ? $item->get_product() : $this->order->get_product_from_item($item);
+    }
+
+    private function get_shipping_total()
+    {
+        return $this->isWoo3() ? $this->order->get_shipping_total() : $this->order->get_total_shipping();
+    }
+
+    private function get_payment_method_title()
+    {
+        return $this->isWoo3() ? $this->order->get_payment_method_title() : $this->order->payment_method_title;
     }
 }
 
