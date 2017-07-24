@@ -1,3 +1,7 @@
+# Woocommerce Transaction Tracking 1.4.0
+
+- Make WooCommerce 2.6 compatible
+
 # Woocommerce Transaction Tracking 1.3.2
 
 - Fix dismiss button
