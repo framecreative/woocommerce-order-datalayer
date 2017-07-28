@@ -12,7 +12,7 @@ Pushes completed orders into a javascript object named `datalayer` into the `wp_
 
 #### Via Composer
 
-`composer require woocommerce-order-datalayer`
+`composer require framecreative/woocommerce-order-datalayer`
 
 #### Manually
 
