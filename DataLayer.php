@@ -133,7 +133,7 @@ class DataLayer
 
                 $product_price = $this->order->get_item_total($item);
                 $product_data  = [
-                    'id'       => $productId,
+                    'id'       => (string) $productId,
                     'name'     => $item['name'],
                     'sku'      => $product_sku ? $product_sku : $product_id,
                     'category' => $product_cat,
@@ -158,7 +158,7 @@ class DataLayer
 
     private function setGeneralOrderObjects()
     {
-        $this->dataLayer['transactionId']             = $this->order->get_order_number();
+        $this->dataLayer['transactionId']             = (string) $this->order->get_order_number();
         $this->dataLayer['transactionDate']           = date('c');
         $this->dataLayer['transactionType']           = 'sale';
         $this->dataLayer['transactionAffiliation']    = html_entity_decode(get_bloginfo('name'), ENT_QUOTES, 'utf-8');
