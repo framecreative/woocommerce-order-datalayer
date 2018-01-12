@@ -1,6 +1,7 @@
 # Woocommerce Order to Datalayer
 
 Pushes completed orders into a javascript object named `datalayer` into the `wp_head()` for Google Tag Manager to use.
+Outputs the order details into the dataLayer on the receipt page then sets a  meta value into order post called `_ga_tracked` so the dataLayer is not outputted twice if the user refreshes.
 
 ## Requirements
 
